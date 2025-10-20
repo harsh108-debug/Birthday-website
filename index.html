@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown timer</title>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-image: url('https://i.pinimg.com/736x/10/e2/2b/10e22b57015b4d2fd75548f3312c96c2.jpg');
+      color: rgba(0, 0, 0, 0.884);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      flex-direction: column;
+      opacity: 1.0;
+      background-size: cover;
+      text-align: center;
+    }
+
+    .flip-clock {
+      display: flex;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 3.5vw;
+    }
+
+    .unit {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      transition: all 0.5s ease;
+    }
+
+    .message {
+      display: none;
+      text-align: center;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    .message h1 {
+      font-family: Montserrat;
+      color: #ffea00;
+      font-size: 8vw; 
+    }
+
+    .message p {
+      font-size: 3.5vw;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .countdown {
+        font-size: 2rem;
+      }
+    }
+    @media (max-width: 500px) {
+      .countdown {
+        gap: 3vw;
+      }
+
+      .time-box {
+        flex: 1 1 45%;
+        padding: 4vw;
+      }
+    }
+    
+    /* Prevent zoom or shrinking on mobile */
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+    </style>
+</head>
+<body>
+  <div class="flip-clock" id="clock">
+    <div class="unit" id="days">00</div>:
+    <div class="unit" id="hours">00</div>:
+    <div class="unit" id="minutes">00</div>:
+    <div class="unit" id="seconds">00</div>
+  </div>
+
+  <div class="message" id="message">
+    <h1>🌟Important!!🎀🌟</h1>
+    <p><H1>It's time🎊🎉,are you ready🤓</H1></p>
+  </div>
+
+  <script>
+    // 🗓️ Set your target date and time here
+    const targetDate = new Date("2025-10-22T00:00:00").getTime();
+
+    const countdown = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+
+      // When countdown ends
+      if (distance <= 0) {
+        clearInterval(countdown);
+        document.getElementById("clock").style.display = "none";
+        const msg = document.getElementById("message");
+        msg.style.display = "block";
+
+        // Redirect after 5 seconds
+        setTimeout(() => {
+          window.location.href = "front-page.html";
+        }, 5000);
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
